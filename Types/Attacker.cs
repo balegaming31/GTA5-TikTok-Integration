@@ -59,10 +59,18 @@ namespace GTAVWebhook.Types
 
         public void DrawName()
         {
-            if (npc != null && name != null && World.GetDistance(npc.Position, Game.Player.Character.Position) <= 30 && npc.IsOnScreen)
+             if (npc != null && name != null && World.GetDistance(npc.Position, Game.Player.Character.Position) <= 30 && npc.IsOnScreen)
             {
                 PointF pointF = Screen.WorldToScreen(npc.Position, false);
-                new TextElement(name, pointF, (float)0.6, Color.White, GTA.UI.Font.Pricedown, Alignment.Center).Draw();
+
+                 int hash = npc.GetHashCode();
+                int r = (hash & 0xFF0000) >> 16;
+                int g = (hash & 0x00FF00) >> 8;
+                int b = (hash & 0x0000FF);
+
+                 Color npcColor = Color.FromArgb(255, r, g, b);
+                 
+                 new TextElement(name, pointF, 0.6f, npcColor, GTA.UI.Font.Pricedown, Alignment.Center).Draw();
             }
         }
     }
